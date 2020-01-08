@@ -24,7 +24,6 @@ class _StudentDetails extends State<StudentDetails> {
 
   _StudentDetails(this.record);
 
-  
   TextEditingController namefieldController = TextEditingController();
   TextEditingController emailfieldController = TextEditingController();
   TextEditingController addressfieldController = TextEditingController();
@@ -102,6 +101,30 @@ class _StudentDetails extends State<StudentDetails> {
     photourl = downurl.toString();
     print(thumbnail);
     update();
+  }
+
+  void update() async {
+    setState(() {
+      processing = true;
+    });
+    Firestore.instance
+        .collection('admission')
+        .document(record.reference.documentID)
+        .setData({
+      'name': namefieldController.text,
+      'address': addressfieldController.text,
+      'mobileNo': mobileController.text,
+      'optNumber': optionalNoController.text,
+      'aadharNo': aadharfieldController.text,
+      'courseName': courseName,
+      'batchTime': batchController.text,
+      'imageUrl': photourl,
+      'dateOfBirth': _fromDay,
+      'status': val,
+      'addDate': addDate,
+      'email': emailfieldController.text,
+    });
+    Navigator.pop(context);
   }
 
   List<String> nameList = new List();
@@ -632,30 +655,6 @@ class _StudentDetails extends State<StudentDetails> {
         ),
       ),
     );
-  }
-
-  void update() async {
-    setState(() {
-      processing = true;
-    });
-    Firestore.instance
-        .collection('admission')
-        .document(record.reference.documentID)
-        .setData({
-      'name': namefieldController.text,
-      'address': addressfieldController.text,
-      'mobileNo': mobileController.text,
-      'optNumber': optionalNoController.text,
-      'aadharNo': aadharfieldController.text,
-      'courseName': courseName,
-      'batchTime': batchController.text,
-      'imageUrl': photourl,
-      'dateOfBirth': _fromDay,
-      'status': val,
-      'addDate': addDate,
-      'email': emailfieldController.text,
-    });
-    Navigator.pop(context);
   }
 }
 

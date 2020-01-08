@@ -2,13 +2,10 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chedoapp/imageView.dart';
 import 'package:chedoapp/student/studentShowDetails.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:math' as Math;
 import 'package:chedoapp/data/course.dart';
 import 'package:chedoapp/data/teacher.dart';
 
@@ -53,22 +50,6 @@ class _TeacherShowDetails extends State<TeacherShowDetails> {
       DateTime.now().year - 18, DateTime.now().month, DateTime.now().day);
 
   String thumbnail;
-  File _imageFile;
-
-  Future<Null> _pickImageFromGallery() async {
-    File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-    imageFile = await compressFile(imageFile, imageFile.path);
-    setState(() {
-      this._imageFile = imageFile;
-    });
-  }
-
-  Future<Null> _pickImageFromCamera() async {
-    File imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      this._imageFile = imageFile;
-    });
-  }
 
   Future<File> compressFile(File file, String targetPath) async {
     // print(file.lengthSync().toString() +
@@ -81,22 +62,6 @@ class _TeacherShowDetails extends State<TeacherShowDetails> {
     //     "_______________compressed_______________________");
 
     return result;
-  }
-
-  Future<void> _uploadFile() async {
-    setState(() {
-      processing = true;
-    });
-    String nm = namefieldController.text;
-    int rand = new Math.Random().nextInt(10000);
-    final StorageReference ref =
-        FirebaseStorage.instance.ref().child("Teacher_$nm $rand.jpg");
-
-    final StorageUploadTask uploadTask = ref.putFile(_imageFile);
-
-    var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
-    thumbnail = downurl.toString();
-    print(thumbnail);
   }
 
   void update() async {
