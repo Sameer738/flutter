@@ -22,7 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<FirebaseUser> handleSignInEmail(String email, String password) async {
-    AuthResult result =
+    try {
+      AuthResult result =
         await auth.signInWithEmailAndPassword(email: email, password: password);
     final FirebaseUser user = result.user;
 
@@ -33,12 +34,22 @@ class _LoginPageState extends State<LoginPage> {
     assert(user.uid == currentUser.uid);
 
     print('SignInEmail Succeeded : $user');
+    setState(() {
+      ans='SignInEmail Succeeded ';
+    });
 
     return user;
+      
+    } catch (e) {
+      ans=e.toString();
+      return null;
+    }
   }
 
   Future<FirebaseUser> handleSignUp(email, password) async {
-    AuthResult result = await auth.createUserWithEmailAndPassword(
+
+    try {
+      AuthResult result = await auth.createUserWithEmailAndPassword(
         email: email, password: password);
     final FirebaseUser user = result.user;
 
@@ -46,7 +57,18 @@ class _LoginPageState extends State<LoginPage> {
     assert(await user.getIdToken() != null);
 
     print('User Created Successfull  $user');
+    setState(() {
+      ans='User Created Successfull';
+    });
     return user;
+      
+    } catch (e) {
+      setState(() {
+        ans='Email already Exists';
+      });
+      return null;
+    }
+    
   }
 
   _showDialogSignUp(BuildContext context) async {
@@ -100,9 +122,8 @@ class _LoginPageState extends State<LoginPage> {
                       handleSignUp(emailController1.text, passController1.text);
 
                       setState(() {
-                        ans = "Sign Up Completed";
-                        emailController1.text='';
-                        passController1.text='';
+                        emailController1.text = '';
+                        passController1.text = '';
                       });
                       Navigator.pop(context);
                     },
@@ -120,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Colors.amber[300],
             content: Form(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -166,7 +188,6 @@ class _LoginPageState extends State<LoginPage> {
                       handleSignInEmail(
                           emailController1.text, passController1.text);
                       setState(() {
-                        ans = "Sign IN Completed";
                         emailController1.text='';
                         passController1.text='';
                       });
@@ -184,7 +205,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Login With Email '),
+        centerTitle: true,
+      ),
       body: Center(
         child: Container(
           margin: EdgeInsets.all(50),
@@ -205,7 +229,9 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: Text('Sign In'),
               ),
-              SizedBox(height: 100.0,),
+              SizedBox(
+                height: 100.0,
+              ),
               Center(
                 child: Text(ans),
               )

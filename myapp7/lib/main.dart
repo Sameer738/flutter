@@ -6,6 +6,7 @@ import 'package:myapp7/fetchApiToJson.dart';
 import 'package:myapp7/futureBuilder.dart';
 import 'package:myapp7/googleFontsDemo.dart';
 import 'package:myapp7/numberApi.dart';
+import 'package:myapp7/richTextDemo.dart';
 import 'package:myapp7/wrapDemo.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyApp1(),
+      home: RichTextDemo(),
     );
   }
 }
