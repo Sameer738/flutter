@@ -50,6 +50,8 @@ class _StudentDetails extends State<StudentDetails> {
   String photourl;
   bool flag = true;
 
+  List courses = new List();
+
   Future<Null> _pickImageFromGallery() async {
     print("___________________________________________");
     File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -103,30 +105,6 @@ class _StudentDetails extends State<StudentDetails> {
     update();
   }
 
-  void update() async {
-    setState(() {
-      processing = true;
-    });
-    Firestore.instance
-        .collection('admission')
-        .document(record.reference.documentID)
-        .setData({
-      'name': namefieldController.text,
-      'address': addressfieldController.text,
-      'mobileNo': mobileController.text,
-      'optNumber': optionalNoController.text,
-      'aadharNo': aadharfieldController.text,
-      'courseName': courseName,
-      'batchTime': batchController.text,
-      'imageUrl': photourl,
-      'dateOfBirth': _fromDay,
-      'status': val,
-      'addDate': addDate,
-      'email': emailfieldController.text,
-    });
-    Navigator.pop(context);
-  }
-
   List<String> nameList = new List();
   String courseName;
 
@@ -144,6 +122,7 @@ class _StudentDetails extends State<StudentDetails> {
     setState(() {
       //courseName = nameList[0];
     });
+    
   }
 
   @override
@@ -164,6 +143,7 @@ class _StudentDetails extends State<StudentDetails> {
     courseName = record.coursename;
     emailfieldController.text = record.email;
     val = record.status;
+    courses = record.courses;
   }
 
   @override
@@ -256,6 +236,15 @@ class _StudentDetails extends State<StudentDetails> {
                                         SizedBox(
                                           width: 10,
                                         ),
+                                        Chip(
+                                          label: Text(
+                                            courses.toString(),
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          backgroundColor:
+                                              Colors.deepOrangeAccent,
+                                        ),
                                         // Chip(
                                         //   label: Text(
                                         //     record.status
@@ -266,18 +255,34 @@ class _StudentDetails extends State<StudentDetails> {
                                         //   ),
                                         //   backgroundColor: Colors.green,
                                         // )
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        Switch(
-                                          activeColor: Colors.green,
-                                          inactiveTrackColor: Colors.red,
-                                          activeTrackColor: Colors.green,
-                                          value: val,
-                                          onChanged: (bool st) {
-                                            val = st;
+                                        // SizedBox(
+                                        //   width: 15,
+                                        // ),
+                                        InkWell(
+                                          child: Chip(label: Text('+')),
+                                          onTap: () {
+                                            setState(() {
+
+                                              List temp=List();
+                                              temp.add('c pp');
+                                              Firestore.instance
+                                                  .collection('admission')
+                                                  .document(record
+                                                      .reference.documentID)
+                                                  .updateData(
+                                                      {'courses': temp});
+                                            });
                                           },
                                         ),
+                                        // Switch(
+                                        //   activeColor: Colors.green,
+                                        //   inactiveTrackColor: Colors.red,
+                                        //   activeTrackColor: Colors.green,
+                                        //   value: val,
+                                        //   onChanged: (bool st) {
+                                        //     val = st;
+                                        //   },
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -578,7 +583,7 @@ class _StudentDetails extends State<StudentDetails> {
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   )
@@ -655,6 +660,30 @@ class _StudentDetails extends State<StudentDetails> {
         ),
       ),
     );
+  }
+
+  void update() async {
+    setState(() {
+      processing = true;
+    });
+    Firestore.instance
+        .collection('admission')
+        .document(record.reference.documentID)
+        .setData({
+      'name': namefieldController.text,
+      'address': addressfieldController.text,
+      'mobileNo': mobileController.text,
+      'optNumber': optionalNoController.text,
+      'aadharNo': aadharfieldController.text,
+      'courseName': courseName,
+      'batchTime': batchController.text,
+      'imageUrl': photourl,
+      'dateOfBirth': _fromDay,
+      'status': val,
+      'addDate': addDate,
+      'email': emailfieldController.text,
+    });
+    Navigator.pop(context);
   }
 }
 

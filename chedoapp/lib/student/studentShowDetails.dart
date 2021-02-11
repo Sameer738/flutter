@@ -118,6 +118,7 @@ class _StudentShowDetails extends State<StudentShowDetails> {
                                         SizedBox(
                                           width: 10,
                                         ),
+                                        
                                         Chip(
                                           label: Text(
                                             record.status

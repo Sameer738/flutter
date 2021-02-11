@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:chedoapp/data/record.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class StudentListView extends StatefulWidget {

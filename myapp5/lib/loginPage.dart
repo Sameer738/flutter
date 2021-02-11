@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp5/signUpPage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -23,52 +24,48 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<FirebaseUser> handleSignInEmail(String email, String password) async {
     try {
-      AuthResult result =
-        await auth.signInWithEmailAndPassword(email: email, password: password);
-    final FirebaseUser user = result.user;
+      AuthResult result = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      final FirebaseUser user = result.user;
 
-    assert(user != null);
-    assert(await user.getIdToken() != null);
+      assert(user != null);
+      assert(await user.getIdToken() != null);
 
-    final FirebaseUser currentUser = await auth.currentUser();
-    assert(user.uid == currentUser.uid);
+      final FirebaseUser currentUser = await auth.currentUser();
+      assert(user.uid == currentUser.uid);
 
-    print('SignInEmail Succeeded : $user');
-    setState(() {
-      ans='SignInEmail Succeeded ';
-    });
+      print('SignInEmail Succeeded : $user');
+      setState(() {
+        ans = 'SignInEmail Succeeded ';
+      });
 
-    return user;
-      
+      return user;
     } catch (e) {
-      ans=e.toString();
+      ans = e.toString();
       return null;
     }
   }
 
   Future<FirebaseUser> handleSignUp(email, password) async {
-
     try {
       AuthResult result = await auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    final FirebaseUser user = result.user;
+          email: email, password: password);
+      final FirebaseUser user = result.user;
 
-    assert(user != null);
-    assert(await user.getIdToken() != null);
+      assert(user != null);
+      assert(await user.getIdToken() != null);
 
-    print('User Created Successfull  $user');
-    setState(() {
-      ans='User Created Successfull';
-    });
-    return user;
-      
+      print('User Created Successfull  $user');
+      setState(() {
+        ans = 'User Created Successfull';
+      });
+      return user;
     } catch (e) {
       setState(() {
-        ans='Email already Exists';
+        ans = 'Email already Exists';
       });
       return null;
     }
-    
   }
 
   _showDialogSignUp(BuildContext context) async {
@@ -103,6 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: EdgeInsets.all(8),
                     child: TextField(
+                      obscureText: true,
                       controller: passController1,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(15),
@@ -141,7 +139,6 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            backgroundColor: Colors.amber[300],
             content: Form(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -188,8 +185,8 @@ class _LoginPageState extends State<LoginPage> {
                       handleSignInEmail(
                           emailController1.text, passController1.text);
                       setState(() {
-                        emailController1.text='';
-                        passController1.text='';
+                        emailController1.text = '';
+                        passController1.text = '';
                       });
                       Navigator.pop(context);
                     },
@@ -216,7 +213,8 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               RaisedButton(
                 onPressed: () {
-                  _showDialogSignUp(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()));
                 },
                 child: Text('Sign Up'),
               ),

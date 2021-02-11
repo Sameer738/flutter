@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chedoapp/course/addCourse.dart';
+import 'package:chedoapp/design.dart';
 import 'package:chedoapp/student/addmissionNew.dart';
 import 'package:chedoapp/student/studentListView.dart';
 import 'package:chedoapp/course/courseView.dart';
@@ -8,6 +9,8 @@ import 'package:chedoapp/teacher/teacherListView.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:chedoapp/login.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -33,6 +36,7 @@ class _Dashboard extends State<Dashboard> {
             photourl = user.photoUrl;
           }),
         );
+        
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -440,7 +444,7 @@ class _Dashboard extends State<Dashboard> {
                 ),
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddTeacherNew()));
+                      MaterialPageRoute(builder: (context) => NewDesign()));
                 },
               ),
             ),
@@ -464,6 +468,11 @@ class _Dashboard extends State<Dashboard> {
                     "Setting",
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
+                  onTap: (){
+                    cGoogleSignIn.disconnect();
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                  },
                 ),
               ),
             ),

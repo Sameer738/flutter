@@ -5,14 +5,14 @@ class Record {
       address,
       mobileno,
       optionalno,
-      aadharno,
       coursename,
+      aadharno,
       batchtime,
       imageurl,
       email;
+  List courses=new List();
   final bool status;
   Timestamp dateofbirth,addDate;
-
   
   final DocumentReference reference;
 
@@ -21,7 +21,6 @@ class Record {
         assert(map['address'] != null),
         assert(map['mobileNo'] != null),
         assert(map['aadharNo'] != null),
-        assert(map['courseName'] != null),
         assert(map['batchTime'] != null),
         assert(map['imageUrl'] != null),
         name = map['name'],
@@ -30,6 +29,7 @@ class Record {
         optionalno = map['optNumber'],
         aadharno = map['aadharNo'],
         coursename = map['courseName'],
+        courses=map['courses'],
         batchtime = map['batchTime'],
         dateofbirth = map['dateOfBirth'],
         imageurl = map['imageUrl'],

@@ -1,9 +1,11 @@
+import 'package:myapp5/arrayDemo.dart';
 import 'package:myapp5/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp5/loginPage.dart';
 import 'package:myapp5/ocrDemo.dart';
 
 import 'package:myapp5/signInWithEmail.dart';
+import 'package:myapp5/signInWithPhoneNo.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,7 +21,7 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: SignInWithPhoneNo(),
     );
   }
 }

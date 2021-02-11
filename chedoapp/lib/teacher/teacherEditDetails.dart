@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math' as Math;
 import 'package:chedoapp/data/course.dart';
@@ -97,7 +98,6 @@ class _TeacherDetails extends State<TeacherDetails> {
     var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
     thumbnail = downurl.toString();
     print(thumbnail);
-    update();
   }
 
   void update() async {

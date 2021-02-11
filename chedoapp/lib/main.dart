@@ -1,4 +1,3 @@
-import 'package:chedoapp/design.dart';
 import 'package:chedoapp/login.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +18,7 @@ class _MyApp extends State<MyApp> {
     return MaterialApp(
         title: 'Chedo_IMS',
         debugShowCheckedModeBanner: false,
-        home: ClientView());
+        home: LoginPage());
   }
 }
 

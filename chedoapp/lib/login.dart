@@ -47,6 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
     if (user != null) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Dashboard()));
+    } else {
+      
     }
   }
 
@@ -91,12 +93,11 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _authorized = authenticated ? 'Authorized' : 'Not Authorized';
       if (_authorized == 'Authorized') {
-        c=Colors.green;
-        processing=true;
+        c = Colors.green;
+        processing = true;
         _handleSignIn();
-      }
-      else{
-        c=Colors.black;
+      } else {
+        c = Colors.black;
       }
     });
   }
